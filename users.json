@@ -1,0 +1,14 @@
+[
+    {
+        "user_id": 2,
+        "name": "Neri",
+        "password": "neri123",
+        "total_spent": 81.0
+    },
+    {
+        "user_id": 3,
+        "name": "Nerii",
+        "password": "neri1234",
+        "total_spent": 0
+    }
+]
