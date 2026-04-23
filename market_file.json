@@ -1,23 +1,5 @@
 [
     {
-        "id": 1,
-        "name": "Banana",
-        "price": 0.1,
-        "stock": 124
-    },
-    {
-        "id": 2,
-        "name": "Apple",
-        "price": 0.1,
-        "stock": 300
-    },
-    {
-        "id": 3,
-        "name": "Orange Juice",
-        "price": 1.5,
-        "stock": 47
-    },
-    {
         "id": 4,
         "name": "Potato",
         "price": 0.2,
@@ -58,5 +40,17 @@
         "name": "Steak",
         "price": 9.0,
         "stock": 50
+    },
+    {
+        "id": 11,
+        "name": "Potato",
+        "price": 1.5,
+        "stock": 198
+    },
+    {
+        "id": 12,
+        "name": "Orange Juice",
+        "price": 3.5,
+        "stock": 88
     }
 ]

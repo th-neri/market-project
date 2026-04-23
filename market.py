@@ -28,12 +28,12 @@ def show_items(items):
     if len(items) == 0:
         print("No products available.")
     else:
-        print("\n---Products available to buy---")
         for i in items:
             print(f'{i["id"]}- {i["name"]} | Price: {i["price"]} | Stock: {i["stock"]}')
 
 #function to add the user information
 def add_user(users):
+    users = load_users()
     name = input("Enter the username: ").strip()
     password = input("Enter the password: ").strip()
     user_id = max([u["user_id"] for u in users], default=0) + 1
@@ -65,6 +65,32 @@ def add_item(items):
     save_item(items)
     print("Product saved successfully.")
 
+#function to erase a product desired
+def delete_item(items):
+    show_items(items)  
+
+    try:
+        item_id = int(input("Choose the product you want to erase by the ID: ").strip())
+        item = find_product(items, item_id)
+
+        if item is None:
+            print("Product not found.")
+            return
+        while True:
+            choice = input(f'Are you sure you want to erase {item["name"]} (Y/N)? ').strip().lower()
+            if choice == "y":
+                items.remove(item)
+                save_item(items)
+                print(f'{item["name"]} erased successfully!')
+                break
+            elif choice == "n":
+                print("Canceled.")
+                break
+            else:
+                print("Invalid choice.")
+    except ValueError:
+        print("Invalid input.")
+            
 #function to find the product by the ID
 def find_product(items, item_id):
     for i in items:
@@ -74,7 +100,6 @@ def find_product(items, item_id):
 
 #function to buy products
 def buy_item(items, user):
-    items = load_items()
     cart = []
     total = 0
 
@@ -97,6 +122,7 @@ def buy_item(items, user):
 
                 if quantity <= item["stock"]:
                     item["stock"] -= quantity
+                    save_item(items)
                     cost = quantity * item["price"]
                     total += cost
                     cart.append((item["name"], quantity, cost))
@@ -109,7 +135,7 @@ def buy_item(items, user):
             print("Invalid input.")
 
         final_price = discount_price(total)
-        user["total_spent"] = final_price
+        user["total_spent"] += final_price
 
         users = load_users()
         for u in users:
@@ -161,21 +187,27 @@ def main():
             print("\n---Market options---")
             print("1. View products")
             print("2. Add product")
-            print("3. Buy product")
-            print("4. Logout")
+            print("3. Erase product")
+            print("4. Buy product")
+            print("5. Logout")
 
             choice = input("Enter your choice: ").strip()
 
             if choice == "1":
+                print("\n---Products available to buy---")
+                items = load_items()
                 show_items(items)
             elif choice == "2":
                 add_item(items)
             elif choice == "3":
-                buy_item(items, current_user)
+                print("\n---Choose the product you want to erase: ---")
+                delete_item(items)
             elif choice == "4":
+                buy_item(items, current_user)
+            elif choice == "5":
                 print("Thanks for coming. Have a nice day! :)")
                 current_user = None
-                break
+                continue
             else:
                 print("Invalid choice. Try again.")
               
